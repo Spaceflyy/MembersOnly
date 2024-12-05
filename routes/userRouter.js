@@ -10,9 +10,12 @@ router.get("/signup", (req, res) => {
 	res.render("signup", { title: "Sign Up" });
 });
 
-router.post("/signup", (req, res) => {
-	const { firstName, lastName, email, password } = req.body;
-	console.log(firstName);
-	res.redirect("/");
+router.get("/login", (req, res) => {
+	res.render("login", { title: "Login" });
 });
+
+router.post("/signup", controller.adduser);
+
+router.post("/login", controller.userlogin);
+
 module.exports = router;
