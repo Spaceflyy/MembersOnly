@@ -2,10 +2,16 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title><%=title%></title>
+		<title></title>
 	</head>
 	<body>
-		<h1>Hello World</h1>
+		<% if (locals.user) {%>
+		<h1>WELCOME BACK <%= user.username %></h1>
+		<a href="/logout">LOG OUT</a>
+		<% } else { %>
+		<h1>please log in</h1>
+		<%-include("login") %> <%}%> <% if (locals.message) {%>
+		<h1><%= locals.message%></h1>
+		<% } %>
 	</body>
 </html>

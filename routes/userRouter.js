@@ -3,7 +3,13 @@ const router = Router();
 const controller = require("../controllers/controller");
 
 router.get("/", (req, res) => {
-	res.render("index", { title: "Home" });
+	const msgs = req.session.messages;
+	delete req.session.messages;
+	res.render("index", {
+		title: "Home",
+		user: req.user,
+		message: msgs,
+	});
 });
 
 router.get("/signup", (req, res) => {
@@ -16,6 +22,6 @@ router.get("/login", (req, res) => {
 
 router.post("/signup", controller.adduser);
 
-router.post("/login", controller.userlogin);
+// router.post("/login", controller.userlogin);
 
 module.exports = router;
