@@ -39,6 +39,7 @@ const validateUser = [
 
 const validateSecret = [
 	body("secretPassword")
+		.trim()
 		.custom((value, { req }) => {
 			return value === process.env.SECRETPASSWORD;
 		})
