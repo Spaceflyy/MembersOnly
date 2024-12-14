@@ -7,6 +7,16 @@ exports.adduser = async (firstName, lastName, username, password) => {
 			[username, password, firstName, lastName]
 		);
 	} catch (err) {
-		return next(err);
+		console.error(err);
+	}
+};
+
+exports.updateMembership = async (userId) => {
+	try {
+		await pool.query("UPDATE users SET memberstatus = 'true' WHERE id = ($1)", [
+			userId,
+		]);
+	} catch (err) {
+		console.error(err);
 	}
 };

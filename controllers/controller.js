@@ -1,10 +1,12 @@
 const db = require("../db/queries");
+require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
-
+const asnycHandler = require("express-async-handler");
 const alphaErr = "must only contain letters.";
 const lengthErr = "must be between 1 and 10 characters.";
 const passLengthErr = "must be between 1 and 10 characters.";
+
 const validateUser = [
 	body("firstName")
 		.trim()
@@ -35,6 +37,15 @@ const validateUser = [
 		.withMessage("Passwords do not match."),
 ];
 
+const validateSecret = [
+	body("secretPassword")
+		.custom((value, { req }) => {
+			return value === process.env.SECRETPASSWORD;
+		})
+		.withMessage("Incorrect Password"),
+];
+const CustomNotFoundError = require("../helpers/CustomNotFoundError");
+
 exports.adduser = [
 	validateUser,
 	async (req, res) => {
@@ -55,4 +66,23 @@ exports.adduser = [
 			}
 		});
 	},
+];
+
+exports.updateMembership = [
+	validateSecret,
+	asnycHandler(async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res
+				.status(400)
+				.render("join", { title: "Join Membership", errors: errors.array() });
+		}
+
+		if (!req.session.passport) {
+			throw new CustomNotFoundError("User Not Found.");
+		}
+		const { user } = await req.session.passport;
+		await db.updateMembership(user);
+		res.redirect("/");
+	}),
 ];
