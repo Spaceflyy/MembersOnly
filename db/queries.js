@@ -20,3 +20,37 @@ exports.updateMembership = async (userId) => {
 		console.error(err);
 	}
 };
+
+exports.addMessage = async (title, message, userId) => {
+	try {
+		await pool.query(
+			"INSERT INTO messages(title, message, userid) VALUES ($1,$2,$3)",
+			[title, message, userId]
+		);
+	} catch (err) {
+		console.error(err);
+	}
+};
+
+exports.getMessagesByuserId = async (userId) => {
+	try {
+		const { rows } = await pool.query(
+			"SELECT title, message, posted, CONCAT(firstname,' ', lastname) as author, memberstatus FROM messages JOIN users ON users.id = ($1);",
+			[userId]
+		);
+		return rows;
+	} catch (err) {
+		console.error(err);
+	}
+};
+
+// exports.findUserByID = async (userId) => {
+// 	try {
+// 		const { rows } = await pool.query("SELECT * FROM users WHERE id = ($1)", [
+// 			userId,
+// 		]);
+// 		return rows;
+// 	} catch (err) {
+// 		console.error(err);
+// 	}
+// };

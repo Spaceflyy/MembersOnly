@@ -8,8 +8,9 @@
 	<body>
 		<% if (locals.user) {%>
 		<h1>WELCOME BACK <%= user.username %></h1>
-		<a href="/logout">LOG OUT</a>
-		<% } else { %>
+		<a href="/newmessage">Create Message</a>
+		<a href="/logout">Log Out</a>
+		<%-include('./partials/messages')%> <% } else { %>
 		<h1>please log in</h1>
 		<%-include("login") %> <%}%> <% if (locals.message) {%>
 		<h1><%= locals.message%></h1>

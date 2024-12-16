@@ -3,26 +3,28 @@ const express = require("express");
 const session = require("express-session");
 const pgSession = require("connect-pg-simple")(session);
 const passport = require("./helpers/passportSetup");
-const userRouter = require("./routes/userRouter");
 const pgPool = require("./db/pool");
 require("dotenv").config();
+
+const userRouter = require("./routes/userRouter");
+const messageRouter = require("./routes/messageRouter");
 
 const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-
+app.use(express.urlencoded({ extended: false }));
 app.use(
 	session({
 		secret: process.env.COOKIE_SECRET,
 		resave: false,
 		saveUninitialized: false,
 		store: new pgSession({ pool: pgPool }),
-		cookie: { maxAge: 1000 * 60 * 60 * 24 },
+		cookie: { maxAge: 1000 * 60 * 60 * 24 * 30 },
 	})
 );
-
 app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
+
+app.use("/newmessage", messageRouter);
 app.use("/", userRouter);
 
 app.use((err, req, res, next) => {
