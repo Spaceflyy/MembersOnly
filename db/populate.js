@@ -9,7 +9,8 @@ username VARCHAR(255),
 password VARCHAR(255),
 firstname VARCHAR(255),
 lastname VARCHAR(255),
-memberstatus BOOLEAN NOT NULL DEFAULT FALSE
+memberstatus BOOLEAN NOT NULL DEFAULT FALSE,
+isadmin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS messages (

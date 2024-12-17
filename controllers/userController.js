@@ -41,7 +41,7 @@ const validateSecret = [
 	body("secretPassword")
 		.trim()
 		.custom((value, { req }) => {
-			return value === process.env.SECRETPASSWORD;
+			return value === process.env.ADMIN || process.env.SECRETPASSWORD;
 		})
 		.withMessage("Incorrect Password"),
 ];
@@ -82,8 +82,15 @@ exports.updateMembership = [
 		if (!req.session.passport) {
 			throw new CustomNotFoundError("User Not Found.");
 		}
+
 		const { user } = await req.session.passport;
-		await db.updateMembership(user);
+
+		if (req.body.secretPassword === process.env.SECRETPASSWORD) {
+			await db.updateMembership(user);
+		} else {
+			await db.updateAdmin(user);
+		}
+
 		res.redirect("/");
 	}),
 ];

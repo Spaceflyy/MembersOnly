@@ -10,8 +10,7 @@ exports.newMessage = async (req, res) => {
 };
 
 exports.getUserMessages = async (req, res) => {
-	const { user } = await req.session.passport;
-	const userMessages = await db.getMessagesByuserId(user);
+	const userMessages = await db.getAllMessages();
 
 	const msgs = req.session.messages;
 	delete req.session.messages;
