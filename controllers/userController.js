@@ -41,7 +41,7 @@ const validateSecret = [
 	body("secretPassword")
 		.trim()
 		.custom((value, { req }) => {
-			return value === process.env.ADMIN || process.env.SECRETPASSWORD;
+			return value === process.env.ADMIN || value === process.env.SECRETPASSWORD;
 		})
 		.withMessage("Incorrect Password"),
 ];

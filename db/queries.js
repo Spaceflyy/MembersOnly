@@ -45,7 +45,7 @@ exports.addMessage = async (title, message, userId) => {
 exports.getAllMessages = async () => {
 	try {
 		const { rows } = await pool.query(
-			"SELECT title, message, posted, CONCAT(firstname,' ', lastname) as author, memberstatus FROM messages JOIN users ON users.id = messages.userid;"
+			"SELECT messages.id, title, message, posted, CONCAT(firstname,' ', lastname) as author FROM messages JOIN users ON users.id = messages.userid;"
 		);
 		return rows;
 	} catch (err) {
@@ -53,13 +53,10 @@ exports.getAllMessages = async () => {
 	}
 };
 
-// exports.findUserByID = async (userId) => {
-// 	try {
-// 		const { rows } = await pool.query("SELECT * FROM users WHERE id = ($1)", [
-// 			userId,
-// 		]);
-// 		return rows;
-// 	} catch (err) {
-// 		console.error(err);
-// 	}
-// };
+exports.deleteMessageById = async (msgId) => {
+	try {
+		await pool.query("DELETE FROM messages WHERE id = ($1)", [msgId]);
+	} catch (err) {
+		console.error(err);
+	}
+};

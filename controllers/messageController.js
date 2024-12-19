@@ -12,12 +12,17 @@ exports.newMessage = async (req, res) => {
 exports.getUserMessages = async (req, res) => {
 	const userMessages = await db.getAllMessages();
 
-	const msgs = req.session.messages;
 	delete req.session.messages;
 	res.render("index", {
 		title: "Home",
 		user: req.user,
-		message: msgs,
+		message: req.session.messages,
 		messages: userMessages,
 	});
+};
+
+exports.deleteMessage = async (req, res) => {
+	const { id } = req.params;
+	db.deleteMessageById(id);
+	res.redirect("/");
 };

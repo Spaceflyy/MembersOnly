@@ -2,8 +2,12 @@
 <h1><%-msg.title%></h1>
 <p><%-msg.message%></p>
 <p><%-msg.posted%></p>
-<%if (msg.memberstatus) {%>
+<%if (user.memberstatus) {%>
 <p><%-msg.author%></p>
 <%} else {%>
 <p>Anonymous</p>
+<%}%> <% if (user.isadmin) {%>
+<form action="/delete/<%-msg.id%>" method="POST">
+	<button type="submit">Delete</button>
+</form>
 <%}%> <% }); %>

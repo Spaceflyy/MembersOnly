@@ -2,11 +2,12 @@ const { Router } = require("express");
 const router = Router();
 const userController = require("../controllers/userController");
 const messageController = require("../controllers/messageController");
-
 const passport = require("passport");
 const CustomNotFoundError = require("../helpers/CustomNotFoundError");
 
 const { adduser, updateMembership } = userController;
+const { deleteMessage, getUserMessages } = messageController;
+router.post("/delete/:id", deleteMessage);
 
 router.get("/signup", (req, res) => {
 	res.render("signup", { title: "Sign Up" });
@@ -42,7 +43,7 @@ router.post(
 
 router.post("/join", updateMembership);
 
-router.get("/", messageController.getUserMessages);
+router.get("/", getUserMessages);
 
 router.use((req, res, next) => {
 	throw new CustomNotFoundError("Page not Found!");
