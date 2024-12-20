@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title><%=title%></title>
+		<link rel="stylesheet" href="/styles.css" />
 	</head>
 	<%-include('./partials/header')%>
 	<body>
@@ -12,7 +13,7 @@
 		<a href="/logout">Log Out</a>
 		<%-include('./partials/messages')%> <% } else { %>
 		<h1>please log in</h1>
-		<%-include("login") %> <%}%> <% if (locals.message) {%>
+		<%-include("./partials/loginForm") %> <%}%> <% if (locals.message) {%>
 		<h1><%= locals.message%></h1>
 		<% } %>
 	</body>

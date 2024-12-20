@@ -6,7 +6,7 @@ const asnycHandler = require("express-async-handler");
 const alphaErr = "must only contain letters.";
 const lengthErr = "must be between 1 and 10 characters.";
 const passLengthErr = "must be between 1 and 10 characters.";
-
+const CustomNotFoundError = require("../helpers/CustomNotFoundError");
 const validateUser = [
 	body("firstName")
 		.trim()
@@ -45,7 +45,6 @@ const validateSecret = [
 		})
 		.withMessage("Incorrect Password"),
 ];
-const CustomNotFoundError = require("../helpers/CustomNotFoundError");
 
 exports.adduser = [
 	validateUser,

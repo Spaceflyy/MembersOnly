@@ -1,9 +1,9 @@
 <%messages.forEach((msg)=>{%>
 <h1><%-msg.title%></h1>
 <p><%-msg.message%></p>
-<p><%-msg.posted%></p>
 <%if (user.memberstatus) {%>
 <p><%-msg.author%></p>
+<p><%-msg.posted%></p>
 <%} else {%>
 <p>Anonymous</p>
 <%}%> <% if (user.isadmin) {%>
