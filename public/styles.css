@@ -1,0 +1,25 @@
+* {
+	box-sizing: border-box;
+}
+body,
+html {
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	display: flex;
+	box-shadow: 0 2px 4px #8e9090;
+	background-color: #f5f5f5;
+	align-items: center;
+	justify-content: space-around;
+}
+nav {
+	width: 30%;
+	border: red solid;
+}
+
+ul {
+	display: flex;
+	justify-content: space-around;
+}
